@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-size: 16px;
+    background: #f9f9f9;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+h2 {
+    text-align: center;
+    text-decoration: underline;
+}
+form {
+    width: 300px;
+    background: #fff;
+    padding: 15px 40px 40px;
+    border: 1px solid #ccc;
+    margin: 50px auto 0;
+    border-radius: 5px;
+}
+label {
+    display: block;
+    margin-bottom: 5px
+}
+label i {
+    color: #999;
+    font-size: 80%;
+}
+input, select {
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+.r {
+    padding-bottom: 10px;
+}
+.form-inline {
+    border: 1px solid #ccc;
+    padding: 8px 10px 4px;
+    border-radius: 2px;
+}
+.form-inline label, .form-inline input {
+    display: inline-block;
+    width: auto;
+    padding-right: 15px;
+}
+.error {
+    color: red;
+    font-size: 90%;
+}
+input[type="submit"] {
+    font-size: 110%;
+    font-weight: 100;
+    background: #006dcc;
+    border-color: #016BC1;
+    box-shadow: 0 3px 0 #0165b6;
+    color: #fff;
+    margin-top: 10px;
+    cursor: pointer;
+}
+input[type="submit"]:hover {
+    background: #0165b6;
+}
+#message {
+  display:none;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+.valid {
+  color: green;
+}
+
+.invalid {
+  color: red;
+}
+
+
+</style>
+<meta charset="UTF-8">
+<title>Epam | SignUp</title>
+<link rel="stylesheet" href="/examples/css/form-style.css">
+<script>
+function printError(elemId, hintMsg) {
+    document.getElementById(elemId).innerHTML = hintMsg;
+}
+ 
+function validateForm() {
+    var name = document.contactForm.name.value;
+    var email = document.contactForm.email.value;
+    var mobile = document.contactForm.mobile.value;
+    var country = document.contactForm.country.value;
+    var gender = document.contactForm.gender.value;    
+    var nameErr = emailErr = mobileErr = countryErr = genderErr = true;
+    if(name == "") {
+        printError("nameErr", "Please enter your name");
+    } else {
+        var regex = /^[a-zA-Z\s]+$/;                
+        if(regex.test(name) === false) {
+            printError("nameErr", "Please enter a valid name");
+        } else {
+            printError("nameErr", "");
+            nameErr = false;
+        }
+    }
+    if(email == "") {
+        printError("emailErr", "Please enter your email address");
+    } else {
+        // Regular expression for basic email validation
+        var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if(regex.test(email) === false) {
+            printError("emailErr", "Please enter a valid email address");
+        } else{
+            printError("emailErr", "");
+            emailErr = false;
+        }
+    }
+    if(mobile == "") {
+        printError("mobileErr", "Please enter your mobile number");
+    } else {
+        var regex = /^[1-9]\d{9}$/;
+        if(regex.test(mobile) === false) {
+            printError("mobileErr", "Please enter a valid 10 digit mobile number");
+        } else{
+            printError("mobileErr", "");
+            mobileErr = false;
+        }
+    }
+    if(country == "Select") {
+        printError("countryErr", "Please select your country");
+    } else {
+        printError("countryErr", "");
+        countryErr = false;
+    }
+    if(gender == "") {
+        printError("genderErr", "Please select your gender");
+    } else {
+        printError("genderErr", "");
+        genderErr = false;
+    }
+    
+  
+    if((nameErr || emailErr || mobileErr || countryErr || genderErr) == true) {
+       return false;
+    } else {
+        
+        var Preview = "You've entered the following details: \n" +
+                          "Full Name: " + name + "\n" +
+                          "Email Address: " + email + "\n" +
+                          "Mobile Number: " + mobile + "\n" +
+                          "Country: " + country + "\n" +
+                          "Gender: " + gender + "\n";
+      alert(Preview);
+    }
+};
+</script>
+</head>
+<body>
+<form name="contactForm" action="RegistrationDone.html" onsubmit="return validateForm()" method="post">
+<img src="logo.jpg" alt="Avatar" style="width: 39px; border-radius: 50%; float: left">
+    <center><h3>Registration Form</h3></center>
+    <div class="row">
+        <label>Full Name</label>
+        <input type="text" name="name" >
+        <div class="error" id="nameErr" ></div>
+    </div>
+    <div class="r">
+        <label>Email Address</label>
+        <input type="text" name="email" id="email">
+        <div class="error" id="emailErr" ></div>
+    </div>
+    <div class="r">
+        <label>Mobile Number</label>
+        <input type="text" name="mobile" maxlength="10" id="mobile" >
+        <div class="error" id="mobileErr"></div>
+    </div>
+    <div class="r">
+        <label>Password</label>
+        <input type="password" name="pass" minlength="6" id="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters" >
+        <div class="error" id="passErr"></div>
+    </div>
+<div id="message">
+  <h3>Password must contain the following:</h3>
+  <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+  <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+  <p id="special" class="invalid">A <b>special</b> letter</p>
+  <p id="number" class="invalid">A <b>number</b></p>
+  <p id="length" class="invalid">Minimum <b>6 characters</b></p>
+</div>
+  <div class="r">
+        <label>Re-enter Password</label>
+        <input type="password" name="repass" minlength="6" id="repsw">
+        <div class="error" id="repassErr"></div>
+    </div>
+  <div class="r">
+        <label>Date</label>
+        <input type="date" name="Date" min="1920-01-01" max="2020-12-31" required>
+        <div class="error" id="dateErr"></div>
+    </div>
+    <div class="r" >
+        <label>Country</label>
+        <select name="country">
+            <option>Select</option>
+            <option>Australia</option>
+            <option>India</option>
+            <option>United States</option>
+            <option>United Kingdom</option>
+        </select>
+        <div class="error" id="countryErr"></div>
+    </div>
+    <div class="r">
+        <label>Gender</label>
+        <div class="form-inline" >
+            <label><input type="radio" name="gender" value="male"> Male</label>
+            <label><input type="radio" name="gender" value="female"> Female</label>
+        </div>
+        <div class="error" id="genderErr"></div>
+    </div>
+    
+    <div class="r">
+        <input type="submit" value="Submit">
+    </div>
+</form>
+<script>
+var myInput = document.getElementById("email");
+var myInput1 = document.getElementById("mobile");
+var myInput2 = document.getElementById("psw");
+var myInput3 = document.getElementById("repsw");
+var letter = document.getElementById("letter");
+var capital = document.getElementById("capital");
+var special = document.getElementById("special");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+myInput.onkeyup = function() {
+        var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if(!(myInput.value.match(regex))) {
+            printError("emailErr", "Please enter a valid email address");
+        } else{
+            printError("emailErr", "");
+            emailErr = false;
+        }
+}
+myInput1.onkeyup = function() {
+        var regex = /^[1-9]\d{9}$/;
+        if(!(myInput1.value.match(regex))) {
+            printError("mobileErr", "Please enter a valid 10 digit mobile number");
+        } else{
+            printError("mobileErr", "");
+            mobileErr = false;
+        }
+}
+myInput2.onfocus = function() {
+  document.getElementById("message").style.display = "block";
+}
+myInput2.onblur = function() {
+  document.getElementById("message").style.display = "none";
+}
+
+myInput2.onkeyup = function() {
+
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput2.value.match(lowerCaseLetters)) {  
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+  }
+
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput2.value.match(upperCaseLetters)) {  
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+  var specialLetters = /[^a-zA-Z\d]/g;
+  if(myInput2.value.match(specialLetters)) {  
+    special.classList.remove("invalid");
+    special.classList.add("valid");
+  } else {
+    special.classList.remove("valid");
+    special.classList.add("invalid");
+  }
+
+  var numbers = /[0-9]/g;
+  if(myInput2.value.match(numbers)) {  
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+ 
+  if(myInput2.value.length >= 6) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+}
+myInput3.onkeyup = function() {
+        if(!(myInput3.value==myInput2.value)) {
+            printError("repassErr", "Passwords do not match");
+        } else{
+            printError("repassErr", "");
+            mobileErr = false;
+        }
+}
+
+</script>
+</body>
+</html>
